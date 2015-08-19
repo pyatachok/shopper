@@ -1,1 +1,20 @@
-index
+<table class="table table-bordered">
+
+	<?php foreach ($this->products as $p) : ?>
+	<tr>
+		<td><?php echo $p->id; ?></td>
+		<td><?php echo $p->name; ?></td>
+		<td><?php echo $p->price; ?></td>
+		<td><?php echo $p->amount; ?></td>
+		<td><?php echo $p->type; ?></td>
+		<td>
+			<pre><?php var_dump(strlen($p->name)) ;?> </pre>
+			<pre><?php  var_dump(!isset($p->name)) ;?> </pre>
+			<pre><?php  $name = $p->name; ;?> </pre>
+			<pre><?php var_dump(empty($name)) ;?></pre>
+<!--				--><?php //echo !empty($p->start) ? $p->start->format(DateTime::RFC3339) : '' ?>
+		</td>
+		<td><?php $p->finish; ?></td>
+	</tr>
+	<?php endforeach; ?>
+</table>
