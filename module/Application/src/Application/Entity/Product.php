@@ -3,12 +3,16 @@
 namespace Application\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Zend\InputFilter\InputFilter;
+use Zend\InputFilter\InputFilterAwareInterface;
+use Zend\InputFilter\InputFilterInterface;
 
 /** @ORM\Entity
  *	@ORM\Table(name="shopper_product")
  */
-class Product {
+class Product implements  InputFilterAwareInterface {
 
+	protected $inputFilter;
 
 	/**
 	 * @ORM\Id
@@ -33,7 +37,7 @@ class Product {
 	protected $amount;
 
 	/**
-	 * @ORM\Column(type="string")
+	 * @ORM\Column(type="string", columnDefinition="ENUM('service', 'stuff')")
 	 */
 	protected $type;
 
@@ -96,15 +100,101 @@ class Product {
 		$this->price = $data['price'];
 		$this->amount = $data['amount'];
 		$this->type = $data['type'];
-		$this->start = new \DateTime($data['start']);
-		$this->finish = new \DateTime($data['finish']);
-		$this->purchase_date = new \DateTime($data['purchase_date']);
+		$this->start = isset($data['start']) ? new \DateTime($data['start']) : null;
+		$this->finish = isset($data['finish']) ? new \DateTime($data['finish']) : null;
+		$this->purchase_date = isset($data['purchase_date']) ? new \DateTime($data['purchase_date']) : null;
 	}
 
-
-
+	/**
+	 * проверяет наличие аттрибута класса
+	 * @param string $attr
+	 *
+	 * @return bool
+	 */
 	public function has($attr)
 	{
 		return isset($this->$attr);
+	}
+
+	public function setInputFilter(InputFilterInterface $inputFilter)
+	{
+		throw new \Exception("Not used");
+	}
+
+	public function getInputFilter()
+	{
+		if (!$this->inputFilter) {
+			$inputFilter = new InputFilter();
+
+			$inputFilter->add(array(
+				'name'     => 'name',
+				'required' => true,
+				'filters'  => array(
+					array('name' => 'StripTags'),
+					array('name' => 'StringTrim'),
+				),
+				'validators' => array(
+					array(
+						'name'    => 'StringLength',
+						'options' => array(
+							'encoding' => 'UTF-8',
+							'min'      => 1,
+							'max'      => 1024,
+						),
+					),
+				),
+			));
+
+			$inputFilter->add(array(
+				'name'     => 'type',
+				'required' => true,
+				'filters'  => array(
+					array('name' => 'StripTags'),
+					array('name' => 'StringTrim'),
+				),
+				'validators' => array(
+					array(
+						'name'    => 'StringLength',
+						'options' => array(
+							'encoding' => 'UTF-8',
+							'min'      => 1,
+							'max'      => 10,
+						),
+					),
+				),
+			));
+
+			$inputFilter->add(array(
+				'name'     => 'price',
+				'required' => true,
+				'filters'  => array(
+					array('name' => 'NumberFormat'),
+				),
+				'validators' => array(
+					array(
+						'name'    => 'float',
+					),
+				),
+			));
+
+
+			$inputFilter->add(array(
+				'name'     => 'amount',
+				'required' => true,
+				'filters'  => array(
+					array('name' => 'NumberFormat'),
+				),
+				'validators' => array(
+					array(
+						'name'    => 'float',
+					),
+				),
+			));
+
+
+			$this->inputFilter = $inputFilter;
+		}
+
+		return $this->inputFilter;
 	}
 }

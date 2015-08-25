@@ -102,6 +102,12 @@ return array(
             __DIR__ . '/../view',
         ),
     ),
+	'view_helpers' => array(
+		'invokables' => array(
+			'customRow' => 'Application\Form\View\Helper\CustomRow',
+			'customFormGroup' => 'Application\Form\View\Helper\CustomFormGroup',
+		),
+	),
 
     // Placeholder for console routes
     'console' => array(
