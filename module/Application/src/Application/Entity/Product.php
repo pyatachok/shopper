@@ -48,6 +48,11 @@ class Product {
 	protected $finish;
 
 	/**
+	 * @ORM\Column(type="datetime")
+	 */
+	protected $purchase_date;
+
+	/**
 	 * Magic getter to expose protected properties.
 	 *
 	 * @param string $property
@@ -93,8 +98,13 @@ class Product {
 		$this->type = $data['type'];
 		$this->start = new \DateTime($data['start']);
 		$this->finish = new \DateTime($data['finish']);
-		$this->purchase_date = $data['purchase_date'];
+		$this->purchase_date = new \DateTime($data['purchase_date']);
 	}
 
 
+
+	public function has($attr)
+	{
+		return isset($this->$attr);
+	}
 }

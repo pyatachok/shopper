@@ -9,6 +9,11 @@ class Product
 	public $id;
 	public $name;
 	public $price;
+	public $amount;
+	public $type;
+	public $start;
+	public $finish;
+	public $purchase_date;
 
 	public function exchangeArray($data)
 	{
