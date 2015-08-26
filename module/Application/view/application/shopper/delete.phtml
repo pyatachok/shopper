@@ -6,8 +6,8 @@
  <h1><?php echo $this->escapeHtml($title); ?></h1>
 
  <p>Точно нужно удалить <?php echo '#'.$product->id ?>
-     '<?php echo $this->escapeHtml($product->name); ?>' от
-     '<?php echo $this->escapeHtml($product->purchase_date); ?>'?
+     <?php echo $this->escapeHtml($product->name); ?> от
+     <?php echo $product->has('purchase_date') ? $product->purchase_date->format('Y-m-d H:i:s') : ''; ?>?
  </p>
  <?php
  $url = $this->url('shopper', array(

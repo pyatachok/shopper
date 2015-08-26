@@ -64,27 +64,29 @@ class ProductForm extends Form
 
 		$this->add(array(
 			'name' => 'start',
-			'type' => 'DateTime',
+			'type' => 'DateTimeSelect',
 			'attributes' => array(
 				'min' => '2010-01-01 00:00:00',
 				'max' => '2030-01-01 00:00:00',
-				'step'=> '1',
+				'step'=> 'any',
 				'class' => 'form-control',
+				'value' => new \DateTime('now'),
 			),
 			'options' => array(
 				'label' => 'Start Date',
-				'format' => 'Y-m-d H:i'
+				'format' => 'Y-m-d H:i:s'
 			),
 		));
 
 		$this->add(array(
 			'name' => 'finish',
-			'type' => 'DateTime',
+			'type' => 'DateTimeSelect',
 			'attributes' => array(
 				'min' => '2010-01-01 00:00:00',
 				'max' => '2030-01-01 00:00:00',
-				'step'=> '1',
+				'step'=> 'any',
 				'class' => 'form-control',
+				'value' => new \DateTime('tomorrow'),
 			),
 			'options' => array(
 				'label' => 'Finish Date',
@@ -94,16 +96,17 @@ class ProductForm extends Form
 
 		$this->add(array(
 			'name' => 'purchase_date',
-			'type' => 'DateTime',
+			'type' => 'DateTimeSelect',
 			'attributes' => array(
 				'min' => '2010-01-01 00:00:00',
 				'max' => '2030-01-01 00:00:00',
-				'step'=> '1',
+				'step'=> 'any',
 				'class' => 'form-control',
+				'value' => new \DateTime('now'),
 			),
 			'options' => array(
 				'label' => 'Purchase Date',
-				'format' => 'Y-m-d H:i'
+				'format' => 'Y-m-d H:i:s'
 			),
 		));
 

@@ -42,17 +42,17 @@ class Product implements  InputFilterAwareInterface {
 	protected $type;
 
 	/**
-	 * @ORM\Column(type="datetime")
+	 * @ORM\Column(type="datetime" )
 	 */
 	protected $start;
 
 	/**
-	 * @ORM\Column(type="datetime")
+	 * @ORM\Column(type="datetime" )
 	 */
 	protected $finish;
 
 	/**
-	 * @ORM\Column(type="datetime")
+	 * @ORM\Column(type="datetime" )
 	 */
 	protected $purchase_date;
 
@@ -187,6 +187,56 @@ class Product implements  InputFilterAwareInterface {
 				'validators' => array(
 					array(
 						'name'    => 'float',
+					),
+				),
+			));
+
+			$inputFilter->add(array(
+				'name'     => 'purchase_date',
+				'required' => true,
+				'filters'  => array(
+					array('name' => 'DateTimeSelect'),
+				),
+				'validators' => array(
+					array(
+						'name'    => 'Date',
+						'options' => array(
+							'format' => 'Y-m-d H:i:s'
+						),
+					),
+				),
+			));
+
+
+			$inputFilter->add(array(
+				'name'     => 'start',
+				'required' => true,
+				'filters'  => array(
+					array('name' => 'DateTimeSelect'),
+				),
+				'validators' => array(
+					array(
+						'name'    => 'Date',
+						'options' => array(
+							'format' => 'Y-m-d H:i:s'
+						),
+					),
+				),
+			));
+
+
+			$inputFilter->add(array(
+				'name'     => 'finish',
+				'required' => true,
+				'filters'  => array(
+					array('name' => 'DateTimeSelect'),
+				),
+				'validators' => array(
+					array(
+						'name'    => 'Date',
+						'options' => array(
+							'format' => 'Y-m-d H:i:s'
+						),
 					),
 				),
 			));
