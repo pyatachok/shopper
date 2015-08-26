@@ -110,6 +110,7 @@ class ShopperController extends AbstractActionController
 				$id = (int) $request->getPost('id');
 				$product = $this->getEntityManager()->find('Application\Entity\Product', $id);
 				if ($product) {
+					$product->tags->clear();
 					$this->getEntityManager()->remove($product);
 					$this->getEntityManager()->flush();
 				}

@@ -61,7 +61,7 @@ class Product implements  InputFilterAwareInterface {
 	 * @ORM\JoinTable(name="product_tags")
 	 */
 	/**
-	 * @ORM\ManyToMany(targetEntity="Tag")
+	 * @ORM\ManyToMany(targetEntity="Tag", cascade={"persist", "remove", "detach"})
 	 * @ORM\JoinTable(name="product_tags",
 	 *      joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")}
 	 *      )
@@ -73,6 +73,16 @@ class Product implements  InputFilterAwareInterface {
 	{
 		$this->tags = new \Doctrine\Common\Collections\ArrayCollection();
 	}
+
+	public function setTags($tags)
+	{
+		foreach ($tags as $tag ) {
+			$this->tags->add($tag);
+		}
+	}
+
+
+
 
 	/**
 	 * Magic getter to expose protected properties.
@@ -265,4 +275,6 @@ class Product implements  InputFilterAwareInterface {
 
 		return $this->inputFilter;
 	}
+
+
 }
