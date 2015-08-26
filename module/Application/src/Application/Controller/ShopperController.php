@@ -60,6 +60,32 @@ class ShopperController extends AbstractActionController
 
 	public function deleteAction()
 	{
+		$id = (int) $this->params()->fromRoute('id', 0);
+		if (!$id) {
+			return $this->redirect()->toRoute('shopper');
+		}
+
+		$request = $this->getRequest();
+		if ($request->isPost()) {
+			$del = $request->getPost('del', 'No');
+
+			if ($del == 'Yes') {
+				$id = (int) $request->getPost('id');
+				$product = $this->getEntityManager()->find('Application\Entity\Product', $id);
+				if ($product) {
+					$this->getEntityManager()->remove($product);
+					$this->getEntityManager()->flush();
+				}
+			}
+
+			// Redirect to list of albums
+			return $this->redirect()->toRoute('shopper');
+		}
+
+		return array(
+			'id'    => $id,
+			'product' => $this->getEntityManager()->find('Application\Entity\Product', $id)
+		);
 	}
 
 	public function getProductTable()
