@@ -66,19 +66,46 @@ class ProductForm extends Form
 			'name' => 'start',
 			'type' => 'DateTime',
 			'attributes' => array(
-				'class' => 'form-control',
-			),
-			'attributes' => array(
 				'min' => '2010-01-01 00:00:00',
 				'max' => '2030-01-01 00:00:00',
-				'step'=> '1'
+				'step'=> '1',
+				'class' => 'form-control',
 			),
 			'options' => array(
-				'label' => 'StartDate',
-				'format' => 'Y-m-d H:i:s'
+				'label' => 'Start Date',
+				'format' => 'Y-m-d H:i'
 			),
 		));
 
+		$this->add(array(
+			'name' => 'finish',
+			'type' => 'DateTime',
+			'attributes' => array(
+				'min' => '2010-01-01 00:00:00',
+				'max' => '2030-01-01 00:00:00',
+				'step'=> '1',
+				'class' => 'form-control',
+			),
+			'options' => array(
+				'label' => 'Finish Date',
+				'format' => 'Y-m-d H:i'
+			),
+		));
+
+		$this->add(array(
+			'name' => 'purchase_date',
+			'type' => 'DateTime',
+			'attributes' => array(
+				'min' => '2010-01-01 00:00:00',
+				'max' => '2030-01-01 00:00:00',
+				'step'=> '1',
+				'class' => 'form-control',
+			),
+			'options' => array(
+				'label' => 'Purchase Date',
+				'format' => 'Y-m-d H:i'
+			),
+		));
 
 		$this->add(array(
 			'name' => 'submit',

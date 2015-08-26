@@ -8,7 +8,7 @@ use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 
 /** @ORM\Entity
- *	@ORM\Table(name="shopper_product")
+ *	@ORM\Table(name="product")
  */
 class Product implements  InputFilterAwareInterface {
 

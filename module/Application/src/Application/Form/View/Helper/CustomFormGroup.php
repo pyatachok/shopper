@@ -4,6 +4,7 @@ namespace Application\Form\View\Helper;
 
 use Zend\Form\ElementInterface;
 use Zend\Form\View\Helper\FormLabel;
+use Zend\Form\Exception;
 
 class CustomFormGroup extends  FormLabel
 {

@@ -4,6 +4,7 @@ namespace Application\Form\View\Helper;
 
 use Zend\Form\ElementInterface;
 use Zend\Form\View\Helper\FormRow;
+use Zend\Form\Exception;
 
 class CustomRow extends  FormRow
 {
