@@ -44,17 +44,17 @@ class Module
 	{
 		return array(
 			'factories' => array(
-				'Application\Model\Table\Product' =>  function($sm) {
-					$tableGateway = $sm->get('ProductTableGateway');
-					$table = new ProductTable($tableGateway);
-					return $table;
-				},
-				'ProductTableGateway' => function ($sm) {
-					$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-					$resultSetPrototype = new ResultSet();
-					$resultSetPrototype->setArrayObjectPrototype(new ProductModel());
-					return new TableGateway('product', $dbAdapter, null, $resultSetPrototype);
-				},
+//				'Application\Model\Table\Product' =>  function($sm) {
+//					$tableGateway = $sm->get('ProductTableGateway');
+//					$table = new ProductTable($tableGateway);
+//					return $table;
+//				},
+//				'ProductTableGateway' => function ($sm) {
+//					$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+//					$resultSetPrototype = new ResultSet();
+//					$resultSetPrototype->setArrayObjectPrototype(new ProductModel());
+//					return new TableGateway('product', $dbAdapter, null, $resultSetPrototype);
+//				},
 			),
 		);
 	}

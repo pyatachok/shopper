@@ -8,9 +8,9 @@ use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 
 /** @ORM\Entity
- *	@ORM\Table(name="product")
+ *	@ORM\Table(name="tag")
  */
-class Product implements  InputFilterAwareInterface {
+class Tag implements  InputFilterAwareInterface {
 
 	protected $inputFilter;
 
@@ -25,54 +25,11 @@ class Product implements  InputFilterAwareInterface {
 	 * @ORM\Column(type="string")
 	 */
 	protected $name;
-
-	/**
-	 * @ORM\Column(type="decimal", precision=10, scale=2)
-	 */
-	protected $price;
-
-	/**
-	 * @ORM\Column(type="decimal", precision=10, scale=2)
-	 */
-	protected $amount;
-
-	/**
-	 * @ORM\Column(type="string", columnDefinition="ENUM('service', 'stuff')")
-	 */
-	protected $type;
-
-	/**
-	 * @ORM\Column(type="datetime", nullable=true )
-	 */
-	protected $start;
-
-	/**
-	 * @ORM\Column(type="datetime" , nullable=true )
-	 */
-	protected $finish;
-
-	/**
-	 * @ORM\Column(type="datetime" )
-	 */
-	protected $purchase_date;
-
-	/**
-	 * @ORM\ManyToMany(targetEntity="Tag")
-	 * @ORM\JoinTable(name="product_tags")
-	 */
-	/**
-	 * @ORM\ManyToMany(targetEntity="Tag")
-	 * @ORM\JoinTable(name="product_tags",
-	 *      joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")}
-	 *      )
-	 */
-	protected $tags;
-
-
-	public function __construct()
-	{
-		$this->tags = new \Doctrine\Common\Collections\ArrayCollection();
-	}
+//
+//	/**
+//	 * @ORM/ManyToMany(targetEntity="Product", mappedBy="groups")
+//	 **/
+//	protected $products;
 
 	/**
 	 * Magic getter to expose protected properties.
