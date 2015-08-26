@@ -42,12 +42,12 @@ class Product implements  InputFilterAwareInterface {
 	protected $type;
 
 	/**
-	 * @ORM\Column(type="datetime" )
+	 * @ORM\Column(type="datetime", nullable=true )
 	 */
 	protected $start;
 
 	/**
-	 * @ORM\Column(type="datetime" )
+	 * @ORM\Column(type="datetime" , nullable=true )
 	 */
 	protected $finish;
 
@@ -210,24 +210,24 @@ class Product implements  InputFilterAwareInterface {
 
 			$inputFilter->add(array(
 				'name'     => 'start',
-				'required' => true,
+				'required' => false,
 				'filters'  => array(
 					array('name' => 'DateTimeSelect'),
 				),
-				'validators' => array(
-					array(
-						'name'    => 'Date',
-						'options' => array(
-							'format' => 'Y-m-d H:i:s'
-						),
-					),
-				),
+//				'validators' => array(
+//					array(
+//						'name'    => 'Date',
+//						'options' => array(
+//							'format' => 'Y-m-d H:i:s'
+//						),
+//					),
+//				),
 			));
 
 
 			$inputFilter->add(array(
 				'name'     => 'finish',
-				'required' => true,
+				'required' => false,
 				'filters'  => array(
 					array('name' => 'DateTimeSelect'),
 				),

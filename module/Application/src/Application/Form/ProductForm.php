@@ -64,13 +64,13 @@ class ProductForm extends Form
 
 		$this->add(array(
 			'name' => 'start',
-			'type' => 'DateTimeSelect',
+			'type' => 'DateTime',
 			'attributes' => array(
 				'min' => '2010-01-01 00:00:00',
 				'max' => '2030-01-01 00:00:00',
 				'step'=> 'any',
 				'class' => 'form-control',
-				'value' => new \DateTime('now'),
+//				'value' => new \DateTime('now'),
 			),
 			'options' => array(
 				'label' => 'Start Date',

@@ -46,7 +46,7 @@ class ShopperController extends AbstractActionController
 				$this->getEntityManager()->persist($product);
 				$this->getEntityManager()->flush();
 
-				// Redirect to list of albums
+				// Redirect to list of products
 				return $this->redirect()->toRoute('shopper');
 			}
 		}
@@ -56,6 +56,43 @@ class ShopperController extends AbstractActionController
 
 	public function editAction()
 	{
+		$id = (int) $this->params()->fromRoute('id', 0);
+		if (!$id) {
+			return $this->redirect()->toRoute('shopper', array(
+				'action' => 'add'
+			));
+		}
+
+		// Get the Album with the specified id.  An exception is thrown
+		// if it cannot be found, in which case go to the index page.
+		$product = $this->getEntityManager()->find('Application\Entity\Product', $id);
+		if (!$product) {
+			return $this->redirect()->toRoute('shopper', array(
+				'action' => 'index'
+			));
+		}
+
+		$form  = new ProductForm();
+		$form->bind($product);
+		$form->get('submit')->setAttribute('value', 'Редактирование');
+
+		$request = $this->getRequest();
+		if ($request->isPost()) {
+			$form->setInputFilter($product->getInputFilter());
+			$form->setData($request->getPost());
+
+			if ($form->isValid()) {
+				$this->getEntityManager()->flush();
+
+				// Redirect to list of albums
+				return $this->redirect()->toRoute('shopper');
+			}
+		}
+
+		return array(
+			'id' => $id,
+			'form' => $form,
+		);
 	}
 
 	public function deleteAction()
@@ -88,8 +125,5 @@ class ShopperController extends AbstractActionController
 		);
 	}
 
-	public function getProductTable()
-	{
 
-	}
 }
