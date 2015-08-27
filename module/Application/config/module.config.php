@@ -4,6 +4,19 @@ namespace Application;
 return array(
     'router' => array(
         'routes' => array(
+			'shopper-ajax' =>[
+				'type'    => 'segment',
+				'options' => array(
+					'route'    => '/ajax[/:action]',
+					'constraints' => array(
+						'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+					),
+					'defaults' => array(
+						'controller' => 'Application\Controller\Ajax',
+						'action'     => 'index',
+					),
+				),
+			],
 			'shopper' =>[
 				'type'    => 'segment',
 				'options' => array(
@@ -82,7 +95,8 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Application\Controller\Index' => 'Application\Controller\IndexController',
-			'Application\Controller\Shopper' => 'Application\Controller\ShopperController'
+			'Application\Controller\Shopper' => 'Application\Controller\ShopperController',
+			'Application\Controller\Ajax' => 'Application\Controller\AjaxController'
         ),
     ),
     'view_manager' => array(
@@ -101,6 +115,9 @@ return array(
         'template_path_stack' => array(
             __DIR__ . '/../view',
         ),
+		'strategies' => array(
+			'ViewJsonStrategy',
+		),
     ),
 	'view_helpers' => array(
 		'invokables' => array(

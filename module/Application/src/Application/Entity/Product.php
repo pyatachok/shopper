@@ -252,7 +252,6 @@ class Product implements  InputFilterAwareInterface {
 //				),
 			));
 
-
 			$inputFilter->add(array(
 				'name'     => 'finish',
 				'required' => false,
@@ -268,6 +267,26 @@ class Product implements  InputFilterAwareInterface {
 					),
 				),
 			));
+
+			$inputFilter->add(array(
+				'name'     => 'tags',
+				'required' => true,
+				'filters'  => array(
+					array('name' => 'StripTags'),
+					array('name' => 'StringTrim'),
+				),
+				'validators' => array(
+					array(
+						'name'    => 'StringLength',
+						'options' => array(
+							'encoding' => 'UTF-8',
+							'min'      => 0,
+							'max'      => 1024,
+						),
+					),
+				),
+			));
+
 
 
 			$this->inputFilter = $inputFilter;

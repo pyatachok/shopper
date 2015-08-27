@@ -1,6 +1,7 @@
 <?php
 namespace Application\Controller;
 
+use Application\Entity\Tag;
 use Application\Form\ProductForm;
 use Application\Entity\Product;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -9,18 +10,8 @@ use Doctrine\ORM\EntityManager;
 
 class ShopperController extends AbstractActionController
 {
-	/**
-	 * @var DoctrineORMEntityManager
-	 */
-	protected $em;
 
-	public function getEntityManager()
-	{
-		if (null === $this->em) {
-			$this->em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
-		}
-		return $this->em;
-	}
+	use Utils;
 
 	public function indexAction()
 	{
@@ -34,6 +25,10 @@ class ShopperController extends AbstractActionController
 	{
 		$form = new ProductForm();
 		$form->get('submit')->setValue('Add');
+		$tags = $this->getEntityManager()->getRepository('Application\Entity\Tag')->findAll();
+		$tags = array_map(function($tag){
+			return $tag->name;
+		}, $tags);
 
 		$request = $this->getRequest();
 		if ($request->isPost()) {
@@ -43,6 +38,28 @@ class ShopperController extends AbstractActionController
 
 			if ($form->isValid()) {
 				$product->exchangeArray($form->getData());
+				$incomeTags = array_filter( array_map('trim', explode( ',', $form->getData()['tags'])));
+				$diff = array_diff($incomeTags, $tags);
+				foreach ( $diff as $tag )
+				{
+					$tagModel = new Tag();
+					$tagModel->exchangeArray(['name' => $tag]);
+					$this->getEntityManager()->persist($tagModel);
+				}
+				$this->getEntityManager()->flush();
+				$tagsModels = $this->getEntityManager()
+					->createQueryBuilder()
+					->select('t')
+					->from('Application\Entity\Tag', 't')
+					->where('t.name IN (:names)')
+					->setParameter('names', $incomeTags)
+					->getQuery()
+					->execute();
+
+				if ( count ($tagsModels) > 0 ) {
+					$product->setTags($tagsModels);
+				}
+
 				$this->getEntityManager()->persist($product);
 				$this->getEntityManager()->flush();
 
@@ -50,7 +67,8 @@ class ShopperController extends AbstractActionController
 				return $this->redirect()->toRoute('shopper');
 			}
 		}
-		return array('form' => $form);
+
+		return array('form' => $form, 'tags' => json_encode($tags));
 
 	}
 

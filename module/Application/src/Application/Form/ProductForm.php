@@ -111,6 +111,19 @@ class ProductForm extends Form
 		));
 
 		$this->add(array(
+			'name' => 'tags',
+			'type' => 'Text',
+			'attributes' => array(
+				'class' => 'form-control js-typeahead',
+				'data-provide' => 'typeahead',
+				'autocomplete' => 'off'
+			),
+			'options' => array(
+				'label' => 'Tags',
+			),
+		));
+
+		$this->add(array(
 			'name' => 'submit',
 			'type' => 'Submit',
 			'attributes' => array(

@@ -70,14 +70,9 @@ class Tag implements  InputFilterAwareInterface {
 	 */
 	public function exchangeArray ($data = array())
 	{
-		$this->id = $data['id'];
+		$this->id = isset($data['id']) ? $data['id'] : null;
 		$this->name = $data['name'];
-		$this->price = $data['price'];
-		$this->amount = $data['amount'];
-		$this->type = $data['type'];
-		$this->start = isset($data['start']) ? new \DateTime($data['start']) : null;
-		$this->finish = isset($data['finish']) ? new \DateTime($data['finish']) : null;
-		$this->purchase_date = isset($data['purchase_date']) ? new \DateTime($data['purchase_date']) : null;
+
 	}
 
 	/**
@@ -119,103 +114,6 @@ class Tag implements  InputFilterAwareInterface {
 					),
 				),
 			));
-
-			$inputFilter->add(array(
-				'name'     => 'type',
-				'required' => true,
-				'filters'  => array(
-					array('name' => 'StripTags'),
-					array('name' => 'StringTrim'),
-				),
-				'validators' => array(
-					array(
-						'name'    => 'StringLength',
-						'options' => array(
-							'encoding' => 'UTF-8',
-							'min'      => 1,
-							'max'      => 10,
-						),
-					),
-				),
-			));
-
-			$inputFilter->add(array(
-				'name'     => 'price',
-				'required' => true,
-				'filters'  => array(
-					array('name' => 'NumberFormat'),
-				),
-				'validators' => array(
-					array(
-						'name'    => 'float',
-					),
-				),
-			));
-
-
-			$inputFilter->add(array(
-				'name'     => 'amount',
-				'required' => true,
-				'filters'  => array(
-					array('name' => 'NumberFormat'),
-				),
-				'validators' => array(
-					array(
-						'name'    => 'float',
-					),
-				),
-			));
-
-			$inputFilter->add(array(
-				'name'     => 'purchase_date',
-				'required' => true,
-				'filters'  => array(
-					array('name' => 'DateTimeSelect'),
-				),
-				'validators' => array(
-					array(
-						'name'    => 'Date',
-						'options' => array(
-							'format' => 'Y-m-d H:i:s'
-						),
-					),
-				),
-			));
-
-
-			$inputFilter->add(array(
-				'name'     => 'start',
-				'required' => false,
-				'filters'  => array(
-					array('name' => 'DateTimeSelect'),
-				),
-//				'validators' => array(
-//					array(
-//						'name'    => 'Date',
-//						'options' => array(
-//							'format' => 'Y-m-d H:i:s'
-//						),
-//					),
-//				),
-			));
-
-
-			$inputFilter->add(array(
-				'name'     => 'finish',
-				'required' => false,
-				'filters'  => array(
-					array('name' => 'DateTimeSelect'),
-				),
-				'validators' => array(
-					array(
-						'name'    => 'Date',
-						'options' => array(
-							'format' => 'Y-m-d H:i:s'
-						),
-					),
-				),
-			));
-
 
 			$this->inputFilter = $inputFilter;
 		}
