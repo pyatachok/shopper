@@ -73,6 +73,7 @@ class Product implements  InputFilterAwareInterface {
 
 	public function setTags($tags)
 	{
+		var_dump($tags);
 		foreach ($tags as $tag ) {
 			$this->tags->add($tag);
 		}
@@ -120,14 +121,19 @@ class Product implements  InputFilterAwareInterface {
 	 */
 	public function exchangeArray ($data = array())
 	{
-		$this->id = $data['id'];
-		$this->name = $data['name'];
-		$this->price = $data['price'];
-		$this->amount = $data['amount'];
-		$this->type = $data['type'];
+		$this->id     = (!empty($data['id'])) ? $data['id'] : null;
+		$this->name = (!empty($data['name'])) ? $data['name'] : null;
+		$this->price = (!empty($data['price'])) ? $data['price'] : null;
+		$this->amount = (!empty($data['amount'])) ? $data['amount'] : null;
+		$this->type = (!empty($data['type'])) ? $data['type'] : null;
 		$this->start = isset($data['start']) ? new \DateTime($data['start']) : null;
 		$this->finish = isset($data['finish']) ? new \DateTime($data['finish']) : null;
 		$this->purchase_date = isset($data['purchase_date']) ? new \DateTime($data['purchase_date']) : null;
+
+//		if (isset ($data['tags']))
+//		{
+//			$this->setTags($data['tags']);
+//		}
 	}
 
 	/**

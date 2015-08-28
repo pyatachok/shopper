@@ -4,6 +4,7 @@ namespace Application\Controller;
 use Application\Entity\Tag;
 use Application\Form\ProductForm;
 use Application\Entity\Product;
+use Application\Service\Cart\ProductCart;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Doctrine\ORM\EntityManager;
@@ -15,8 +16,9 @@ class ShopperController extends AbstractActionController
 
 	public function indexAction()
 	{
+
 		return new ViewModel(array(
-			'products' => $this->getEntityManager()->getRepository('Application\Entity\Product')->findAll(),
+			'products' => $this->getEntityManager()->getRepository('Application\Entity\Product')->findBy([],['purchase_date'=> 'DESC']),
 		));
 
 	}
@@ -25,43 +27,25 @@ class ShopperController extends AbstractActionController
 	{
 		$form = new ProductForm();
 		$form->get('submit')->setValue('Add');
-		$tags = $this->getEntityManager()->getRepository('Application\Entity\Tag')->findAll();
-		$tags = array_map(function($tag){
-			return $tag->name;
-		}, $tags);
+
+		/**
+		 * @var $productCart ProductCart
+		 */
+		$productCart = $this->getServiceLocator()->get('productService');
+
+		$tags = $productCart->getAllTags();
 
 		$request = $this->getRequest();
 		if ($request->isPost()) {
-			$product = new Product();
+
+			$product = $productCart->getProduct();
 			$form->setInputFilter($product->getInputFilter());
 			$form->setData($request->getPost());
 
 			if ($form->isValid()) {
-				$product->exchangeArray($form->getData());
-				$incomeTags = array_filter( array_map('trim', explode( ',', $form->getData()['tags'])));
-				$diff = array_diff($incomeTags, $tags);
-				foreach ( $diff as $tag )
-				{
-					$tagModel = new Tag();
-					$tagModel->exchangeArray(['name' => $tag]);
-					$this->getEntityManager()->persist($tagModel);
-				}
-				$this->getEntityManager()->flush();
-				$tagsModels = $this->getEntityManager()
-					->createQueryBuilder()
-					->select('t')
-					->from('Application\Entity\Tag', 't')
-					->where('t.name IN (:names)')
-					->setParameter('names', $incomeTags)
-					->getQuery()
-					->execute();
-
-				if ( count ($tagsModels) > 0 ) {
-					$product->setTags($tagsModels);
-				}
-
-				$this->getEntityManager()->persist($product);
-				$this->getEntityManager()->flush();
+				$productCart->updateProduct($form->getData());
+				$productCart->setTags($form->getData()['tags']);
+				$productCart->save();
 
 				// Redirect to list of products
 				return $this->redirect()->toRoute('shopper');

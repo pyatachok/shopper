@@ -32,8 +32,12 @@
 		<td><?php echo $p->amount; ?></td>
 		<td><?php echo $p->type; ?></td>
 		<td><?php echo $p->has('purchase_date') ? $p->purchase_date->format('Y-m-d H:i:s') : '' ?></td>
-		<td><?php echo $p->has('start') ? $p->start->format('Y-m-d H:i:s') : '' ?></td>
-		<td><?php echo $p->has('finish') ? $p->finish->format('Y-m-d H:i:s') : '' ?></td>
+		<?php if ($p->type == 'service') : ?>
+			<td><?php echo $p->has('start') ? $p->start->format('Y-m-d H:i:s') : '' ?></td>
+			<td><?php echo $p->has('finish') ? $p->finish->format('Y-m-d H:i:s') : '' ?></td>
+		<?php else : ?>
+			<td></td><td></td>
+		<?php endif; ?>
 	</tr>
 	<?php endforeach; ?>
 </table>

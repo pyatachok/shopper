@@ -1,6 +1,8 @@
 <?php
 namespace Application;
 
+use Application\Service\Cart\EntityManagerAwareInterface;
+
 return array(
     'router' => array(
         'routes' => array(
@@ -81,6 +83,17 @@ return array(
         'factories' => array(
             'translator' => 'Zend\Mvc\Service\TranslatorServiceFactory',
         ),
+		'initializers' => array(
+			'entityManager' => function ($service, $sm) {
+				if ($service instanceof EntityManagerAwareInterface) {
+                        $em = $sm->get('doctrine.entitymanager.orm_default');
+                        $service->setEntityManager($em);
+                    }
+			}
+		),
+		'invokables' => array(
+			'productService' => 'Application\Service\Cart\ProductCart'
+		),
     ),
     'translator' => array(
         'locale' => 'en_US',
