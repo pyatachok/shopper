@@ -56,10 +56,7 @@ class Product implements  InputFilterAwareInterface {
 	 */
 	protected $purchase_date;
 
-	/**
-	 * @ORM\ManyToMany(targetEntity="Tag")
-	 * @ORM\JoinTable(name="product_tags")
-	 */
+
 	/**
 	 * @ORM\ManyToMany(targetEntity="Tag", cascade={"persist", "remove", "detach"})
 	 * @ORM\JoinTable(name="product_tags",
@@ -286,8 +283,6 @@ class Product implements  InputFilterAwareInterface {
 					),
 				),
 			));
-
-
 
 			$this->inputFilter = $inputFilter;
 		}

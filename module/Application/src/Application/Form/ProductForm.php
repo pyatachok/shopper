@@ -112,7 +112,7 @@ class ProductForm extends Form
 
 		$this->add(array(
 			'name' => 'tags',
-			'type' => 'Text',
+			'type' => 'Application\Form\Element\TextCollection',
 			'attributes' => array(
 				'class' => 'form-control js-typeahead',
 				'data-provide' => 'typeahead',
