@@ -6,7 +6,7 @@ use Application\Service\Cart\ProductCart;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
-class ShopperController extends AbstractActionController
+class TransController extends AbstractActionController
 {
 
 	use Utils;
@@ -15,7 +15,7 @@ class ShopperController extends AbstractActionController
 	{
 
 		return new ViewModel(array(
-			'products' => $this->getEntityManager()->getRepository('Application\Entity\Product')->findBy([],['purchase_date'=> 'DESC']),
+			'trans' => $this->getEntityManager()->getRepository('Application\Entity\Transaction')->findBy([],['date'=> 'DESC']),
 		));
 
 	}

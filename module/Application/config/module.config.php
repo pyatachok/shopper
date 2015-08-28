@@ -33,6 +33,20 @@ return array(
 					),
 				),
 			],
+			'trans' =>[
+				'type'    => 'segment',
+				'options' => array(
+					'route'    => '/trans[/:action][/:id]',
+					'constraints' => array(
+						'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+						'id'     => '[0-9]+',
+					),
+					'defaults' => array(
+						'controller' => 'Application\Controller\Trans',
+						'action'     => 'index',
+					),
+				),
+			],
             'home' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
@@ -109,6 +123,7 @@ return array(
         'invokables' => array(
             'Application\Controller\Index' => 'Application\Controller\IndexController',
 			'Application\Controller\Shopper' => 'Application\Controller\ShopperController',
+			'Application\Controller\Trans' => 'Application\Controller\TransController',
 			'Application\Controller\Ajax' => 'Application\Controller\AjaxController'
         ),
     ),

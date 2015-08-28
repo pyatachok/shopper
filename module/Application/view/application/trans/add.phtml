@@ -1,0 +1,27 @@
+<?php
+$title = 'Добавить транзакцию';
+$this->headTitle($title);
+?>
+<h1 class="lg-"><?php echo $this->escapeHtml($title); ?></h1>
+<script>
+	<?php if ($tags) : ?>
+	window.tags = <?php echo $tags; ?>;
+	<?php endif ?>
+</script>
+
+<?php
+$form->setAttribute('action', $this->url('trans', array('action' => 'add')));
+$form->prepare();
+
+echo $this->form()->openTag($form);
+echo $this->formHidden($form->get('id'));
+echo $this->customRow($form->get('name'));
+echo $this->customRow($form->get('type'));
+echo $this->customRow($form->get('price'));
+echo $this->customRow($form->get('amount'));
+echo $this->customRow($form->get('purchase_date'));
+echo $this->customRow($form->get('start'));
+echo $this->customRow($form->get('finish'));
+echo $this->customRow($form->get('tags'));
+echo $this->formSubmit($form->get('submit'));
+echo $this->form()->closeTag();
