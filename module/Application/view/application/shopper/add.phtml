@@ -3,13 +3,11 @@ $title = 'Добавить покупку';
 $this->headTitle($title);
 ?>
 <h1 class="lg-"><?php echo $this->escapeHtml($title); ?></h1>
-
-
-	<script>
-		<?php if ($tags) : ?>
-		window.tags = <?php echo $tags; ?>;
-		<?php endif ?>
-	</script>
+<script>
+	<?php if ($tags) : ?>
+	window.tags = <?php echo $tags; ?>;
+	<?php endif ?>
+</script>
 
 <?php
 $form->setAttribute('action', $this->url('shopper', array('action' => 'add')));

@@ -65,14 +65,20 @@ class ShopperController extends AbstractActionController
 			));
 		}
 
-		// Get the Album with the specified id.  An exception is thrown
-		// if it cannot be found, in which case go to the index page.
-		$product = $this->getEntityManager()->find('Application\Entity\Product', $id);
+		/**
+		 * @var $productCart ProductCart
+		 */
+		$productCart = $this->getServiceLocator()->get('productService');
+
+		$productCart->setProduct($id);
+		$product = $productCart->getProduct();
 		if (!$product) {
 			return $this->redirect()->toRoute('shopper', array(
 				'action' => 'index'
 			));
 		}
+
+		$tags = $productCart->getAllTags();
 
 		$form  = new ProductForm();
 		$form->bind($product);
@@ -84,7 +90,8 @@ class ShopperController extends AbstractActionController
 			$form->setData($request->getPost());
 
 			if ($form->isValid()) {
-				$this->getEntityManager()->flush();
+				$productCart->setTags($request->getPost('tags'));
+				$productCart->save();
 
 				// Redirect to list of albums
 				return $this->redirect()->toRoute('shopper');
@@ -94,6 +101,7 @@ class ShopperController extends AbstractActionController
 		return array(
 			'id' => $id,
 			'form' => $form,
+			'tags' => json_encode($tags)
 		);
 	}
 

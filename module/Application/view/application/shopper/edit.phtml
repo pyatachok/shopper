@@ -4,6 +4,11 @@ $title = 'Редактирование покупки';
 $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
+<script>
+	<?php if ($tags) : ?>
+	window.tags = <?php echo $tags; ?>;
+	<?php endif ?>
+</script>
 
 <?php
 $form = $this->form;
