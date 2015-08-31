@@ -2,12 +2,21 @@
 namespace Application\Form;
 
 
+use Application\Service\Cart\EntityManagerAwareInterface;
+use Application\Service\Cart\EntityManagerAwareTrait;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Zend\Form\Exception\InvalidArgumentException;
 use Zend\Form\Form;
 
-class ProductForm extends Form
+class ProductForm extends Form implements EntityManagerAwareInterface
 {
-	public function __construct ( $name = null )
+	use EntityManagerAwareTrait;
+
+	public function __construct ( EntityManager $em )
 	{
+		$this->setEntityManager($em);
+
 		// we want to ignore the name passed
         parent::__construct('product');
 
@@ -120,6 +129,20 @@ class ProductForm extends Form
 			),
 			'options' => array(
 				'label' => 'Tags',
+			),
+		));
+
+		$this->add(array(
+			'name' => 'source',
+			'type' => 'DoctrineModule\Form\Element\ObjectSelect',
+			'attributes' => array(
+				'class' => 'form-control',
+			),
+			'options' => array(
+				'label' => 'Source',
+				'object_manager' => $this->getEntityManager(),
+				'target_class'   => 'Application\Entity\Source',
+				'property'       => 'name',
 			),
 		));
 

@@ -66,6 +66,18 @@ class Product implements  InputFilterAwareInterface {
 	protected $tags;
 
 
+	/**
+	 * @ORM\ManyToOne(targetEntity="Source")
+	 * @ORM\JoinColumn(name="source_id", referencedColumnName="id")
+	 **/
+	protected $source;
+
+	/**
+	 * @ORM\Column(type="integer");
+	 */
+	protected $source_id;
+
+
 	public function __construct()
 	{
 		$this->tags = new \Doctrine\Common\Collections\ArrayCollection();
@@ -129,6 +141,7 @@ class Product implements  InputFilterAwareInterface {
 		$this->start = isset($data['start']) ? new \DateTime($data['start']) : null;
 		$this->finish = isset($data['finish']) ? new \DateTime($data['finish']) : null;
 		$this->purchase_date = isset($data['purchase_date']) ? new \DateTime($data['purchase_date']) : null;
+		$this->source_id = $data['source'];
 
 //		if (isset ($data['tags']))
 //		{

@@ -22,7 +22,7 @@ class ShopperController extends AbstractActionController
 
 	public function addAction()
 	{
-		$form = new ProductForm();
+		$form = new ProductForm($this->getEntityManager());
 		$form->get('submit')->setValue('Add');
 
 		/**
@@ -77,14 +77,15 @@ class ShopperController extends AbstractActionController
 
 		$tags = $productCart->getAllTags();
 
-		$form  = new ProductForm();
+		$form  = new ProductForm($this->getEntityManager());
 		$form->bind($product);
 		$form->get('submit')->setAttribute('value', 'Редактирование');
 
 		$request = $this->getRequest();
 		if ($request->isPost()) {
 			$form->setInputFilter($product->getInputFilter());
-			$form->setData($request->getPost());
+			var_dump((array) $request->getPost());
+			$form->setData( (array) $request->getPost());
 
 			if ($form->isValid()) {
 				$productCart->setTags($request->getPost('tags'));

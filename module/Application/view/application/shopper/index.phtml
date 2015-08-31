@@ -19,7 +19,7 @@
 			</a>
 		</td>
 		<td>
-			<a href="<?php echo $this->url('shopper', array('action'=>'edit', 'id'=>$p->id)) ?>"><?php echo $p->name; ?></a></br>
+			<a href="<?php echo $this->url('shopper', array('action'=>'edit', 'id'=>$p->id)) ?>"><?php echo $p->name; ?></a> (<?php echo $p->source->name; ?>)</br>
 			<?php if ( count($p->tags) > 0 )  : ?>
 			<p class="alert alert-success">
 				<?php foreach ( $p->tags as $tag ) : ?>

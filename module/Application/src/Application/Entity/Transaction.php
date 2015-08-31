@@ -22,10 +22,20 @@ class Transaction implements  InputFilterAwareInterface {
 	protected $id;
 
 	/**
-	 * @ORM\Column(type="string")
-	 */
-	protected $name;
+	 * @ORM\ManyToOne(targetEntity="Source")
+	 * @ORM\JoinColumn(name="source_id", referencedColumnName="id")
+	 **/
+	protected $source;
 
+	/**
+	 * @ORM\Column(type="decimal", precision=10, scale=2)
+	 */
+	protected $amount;
+
+	/**
+	 * @ORM\Column(type="datetime" )
+	 */
+	protected $date;
 
 	/**
 	 * Magic getter to expose protected properties.
@@ -67,7 +77,9 @@ class Transaction implements  InputFilterAwareInterface {
 	public function exchangeArray ($data = array())
 	{
 		$this->id = isset($data['id']) ? $data['id'] : null;
-		$this->name = $data['name'];
+		$this->source = $data['source'];
+		$this->amount = $data['amount'];
+		$this->date = isset($data['date']) ? new \DateTime($data['date']) : null;
 
 	}
 
@@ -107,6 +119,35 @@ class Transaction implements  InputFilterAwareInterface {
 							'min'      => 1,
 							'max'      => 1024,
 						),
+					),
+				),
+			));
+
+			$inputFilter->add(array(
+				'name'     => 'date',
+				'required' => true,
+				'filters'  => array(
+					array('name' => 'DateTimeSelect'),
+				),
+				'validators' => array(
+					array(
+						'name'    => 'Date',
+						'options' => array(
+							'format' => 'Y-m-d H:i:s'
+						),
+					),
+				),
+			));
+
+			$inputFilter->add(array(
+				'name'     => 'amount',
+				'required' => true,
+				'filters'  => array(
+					array('name' => 'NumberFormat'),
+				),
+				'validators' => array(
+					array(
+						'name'    => 'float',
 					),
 				),
 			));

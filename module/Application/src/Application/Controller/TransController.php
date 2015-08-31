@@ -2,6 +2,7 @@
 namespace Application\Controller;
 
 use Application\Form\ProductForm;
+use Application\Form\TransactionForm;
 use Application\Service\Cart\ProductCart;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
@@ -15,14 +16,14 @@ class TransController extends AbstractActionController
 	{
 
 		return new ViewModel(array(
-			'trans' => $this->getEntityManager()->getRepository('Application\Entity\Transaction')->findBy([],['date'=> 'DESC']),
+			'transactions' => $this->getEntityManager()->getRepository('Application\Entity\Transaction')->findBy([],['date'=> 'DESC']),
 		));
 
 	}
 
 	public function addAction()
 	{
-		$form = new ProductForm();
+		$form = new TransactionForm($this->getEntityManager());
 		$form->get('submit')->setValue('Add');
 
 		/**
