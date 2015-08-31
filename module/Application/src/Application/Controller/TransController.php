@@ -53,48 +53,41 @@ class TransController extends AbstractActionController
 	{
 		$id = (int) $this->params()->fromRoute('id', 0);
 		if (!$id) {
-			return $this->redirect()->toRoute('shopper', array(
+			return $this->redirect()->toRoute('trans', array(
 				'action' => 'add'
 			));
 		}
 
-		/**
-		 * @var $productCart ProductCart
-		 */
-		$productCart = $this->getServiceLocator()->get('productService');
-
-		$productCart->setProduct($id);
-		$product = $productCart->getProduct();
-		if (!$product) {
-			return $this->redirect()->toRoute('shopper', array(
+		$transaction = $this->getEntityManager()->find('Application\Entity\Transaction', $id);
+		if (!$transaction) {
+			return $this->redirect()->toRoute('trans', array(
 				'action' => 'index'
 			));
 		}
 
-		$tags = $productCart->getAllTags();
 
-		$form  = new ProductForm();
-		$form->bind($product);
+		$form  = new TransactionForm($this->getEntityManager());
+		$form->bind($transaction);
 		$form->get('submit')->setAttribute('value', 'Редактирование');
 
 		$request = $this->getRequest();
 		if ($request->isPost()) {
-			$form->setInputFilter($product->getInputFilter());
+			$form->setInputFilter($transaction->getInputFilter());
 			$form->setData($request->getPost());
 
 			if ($form->isValid()) {
-				$productCart->setTags($request->getPost('tags'));
-				$productCart->save();
+				$this->getEntityManager()->persist($transaction);
+				$this->getEntityManager()->flush();
+
 
 				// Redirect to list of albums
-				return $this->redirect()->toRoute('shopper');
+				return $this->redirect()->toRoute('trans');
 			}
 		}
 
 		return array(
 			'id' => $id,
 			'form' => $form,
-			'tags' => json_encode($tags)
 		);
 	}
 
