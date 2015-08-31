@@ -1,6 +1,7 @@
 <?php
 namespace Application\Controller;
 
+use Application\Entity\Transaction;
 use Application\Form\ProductForm;
 use Application\Form\TransactionForm;
 use Application\Service\Cart\ProductCart;
@@ -26,31 +27,25 @@ class TransController extends AbstractActionController
 		$form = new TransactionForm($this->getEntityManager());
 		$form->get('submit')->setValue('Add');
 
-		/**
-		 * @var $productCart ProductCart
-		 */
-		$productCart = $this->getServiceLocator()->get('productService');
-
-		$tags = $productCart->getAllTags();
-
 		$request = $this->getRequest();
 		if ($request->isPost()) {
 
-			$product = $productCart->getProduct();
-			$form->setInputFilter($product->getInputFilter());
+			$transaction = new Transaction();
+			$form->setInputFilter($transaction->getInputFilter());
 			$form->setData($request->getPost());
 
 			if ($form->isValid()) {
-				$productCart->updateProduct($form->getData());
-				$productCart->setTags($form->getData()['tags']);
-				$productCart->save();
+				$transaction->exchangeArray($form->getData());
+				$transaction->source = $this->getEntityManager()->find('Application\Entity\Source', $form->getData()['source']);
+				$this->getEntityManager()->persist($transaction);
+				$this->getEntityManager()->flush();
 
 				// Redirect to list of products
-				return $this->redirect()->toRoute('shopper');
+				return $this->redirect()->toRoute('trans');
 			}
 		}
 
-		return array('form' => $form, 'tags' => json_encode($tags));
+		return array('form' => $form);
 
 	}
 
@@ -107,7 +102,7 @@ class TransController extends AbstractActionController
 	{
 		$id = (int) $this->params()->fromRoute('id', 0);
 		if (!$id) {
-			return $this->redirect()->toRoute('shopper');
+			return $this->redirect()->toRoute('trans');
 		}
 
 		$request = $this->getRequest();
@@ -116,21 +111,20 @@ class TransController extends AbstractActionController
 
 			if ($del == 'Yes') {
 				$id = (int) $request->getPost('id');
-				$product = $this->getEntityManager()->find('Application\Entity\Product', $id);
-				if ($product) {
-					$product->tags->clear();
-					$this->getEntityManager()->remove($product);
+				$transaction = $this->getEntityManager()->find('Application\Entity\Transaction', $id);
+				if ($transaction) {
+					$this->getEntityManager()->remove($transaction);
 					$this->getEntityManager()->flush();
 				}
 			}
 
 			// Redirect to list of albums
-			return $this->redirect()->toRoute('shopper');
+			return $this->redirect()->toRoute('trans');
 		}
 
 		return array(
 			'id'    => $id,
-			'product' => $this->getEntityManager()->find('Application\Entity\Product', $id)
+			'transaction' => $this->getEntityManager()->find('Application\Entity\Transaction', $id)
 		);
 	}
 

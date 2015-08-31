@@ -38,7 +38,6 @@ class ShopperController extends AbstractActionController
 			$product = $productCart->getProduct();
 			$form->setInputFilter($product->getInputFilter());
 			$form->setData($request->getPost());
-
 			if ($form->isValid()) {
 				$productCart->updateProduct($form->getData());
 				$productCart->setTags($form->getData()['tags']);
@@ -84,7 +83,6 @@ class ShopperController extends AbstractActionController
 		$request = $this->getRequest();
 		if ($request->isPost()) {
 			$form->setInputFilter($product->getInputFilter());
-			var_dump((array) $request->getPost());
 			$form->setData( (array) $request->getPost());
 
 			if ($form->isValid()) {

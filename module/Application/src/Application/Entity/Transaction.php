@@ -38,6 +38,11 @@ class Transaction implements  InputFilterAwareInterface {
 	protected $date;
 
 	/**
+	 * @ORM\Column(type="integer");
+	 */
+	protected $source_id;
+
+	/**
 	 * Magic getter to expose protected properties.
 	 *
 	 * @param string $property
@@ -77,7 +82,7 @@ class Transaction implements  InputFilterAwareInterface {
 	public function exchangeArray ($data = array())
 	{
 		$this->id = isset($data['id']) ? $data['id'] : null;
-		$this->source = $data['source'];
+		$this->source_id = $data['source'];
 		$this->amount = $data['amount'];
 		$this->date = isset($data['date']) ? new \DateTime($data['date']) : null;
 
@@ -103,25 +108,6 @@ class Transaction implements  InputFilterAwareInterface {
 	{
 		if (!$this->inputFilter) {
 			$inputFilter = new InputFilter();
-
-			$inputFilter->add(array(
-				'name'     => 'name',
-				'required' => true,
-				'filters'  => array(
-					array('name' => 'StripTags'),
-					array('name' => 'StringTrim'),
-				),
-				'validators' => array(
-					array(
-						'name'    => 'StringLength',
-						'options' => array(
-							'encoding' => 'UTF-8',
-							'min'      => 1,
-							'max'      => 1024,
-						),
-					),
-				),
-			));
 
 			$inputFilter->add(array(
 				'name'     => 'date',

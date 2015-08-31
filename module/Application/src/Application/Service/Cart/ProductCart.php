@@ -86,6 +86,7 @@ class ProductCart implements EntityManagerAwareInterface
 	public function updateProduct($values)
 	{
 		$this->getProduct()->exchangeArray($values);
+		$this->getProduct()->source = $this->getEntityManager()->find('Application\Entity\Source', $values['source']);
 	}
 
 	public function save()

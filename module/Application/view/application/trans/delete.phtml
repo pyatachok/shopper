@@ -5,9 +5,9 @@
  ?>
  <h1><?php echo $this->escapeHtml($title); ?></h1>
 
- <p>Точно нужно удалить <?php echo '#'.$product->id ?>
-     <?php echo $this->escapeHtml($product->name); ?> от
-     <?php echo $product->has('purchase_date') ? $product->purchase_date->format('Y-m-d H:i:s') : ''; ?>?
+ <p>Точно нужно удалить <?php echo '#'.$transaction->id ?>
+     <?php echo $this->escapeHtml($transaction->source->name); ?> от
+     <?php echo $transaction->has('date') ? $transaction->date->format('Y-m-d H:i:s') : ''; ?>?
  </p>
  <?php
  $url = $this->url('trans', array(
@@ -17,7 +17,7 @@
  ?>
  <form action="<?php echo $url; ?>" method="post">
  <div>
-     <input type="hidden" name="id" value="<?php echo (int) $product->id; ?>" />
+     <input type="hidden" name="id" value="<?php echo (int) $transaction->id; ?>" />
      <input type="submit" name="del" value="Yes" />
      <input type="submit" name="del" value="No" />
  </div>

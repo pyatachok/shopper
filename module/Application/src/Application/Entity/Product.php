@@ -85,7 +85,6 @@ class Product implements  InputFilterAwareInterface {
 
 	public function setTags($tags)
 	{
-		var_dump($tags);
 		foreach ($tags as $tag ) {
 			$this->tags->add($tag);
 		}
