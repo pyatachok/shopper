@@ -65,8 +65,8 @@ class ProductForm extends Form implements EntityManagerAwareInterface
 			'options' => array(
 				'label' => 'Type',
 				'value_options' => array(
-					1 => 'service',
-					2 => 'stuff',
+					'service' => 'service',
+					'stuff' => 'stuff',
 				)
 			),
 		));

@@ -33,6 +33,20 @@ return array(
 					),
 				),
 			],
+			'source' =>[
+				'type'    => 'segment',
+				'options' => array(
+					'route'    => '/source[/:action][/:id]',
+					'constraints' => array(
+						'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+						'id'     => '[0-9]+',
+					),
+					'defaults' => array(
+						'controller' => 'Application\Controller\Source',
+						'action'     => 'index',
+					),
+				),
+			],
 			'trans' =>[
 				'type'    => 'segment',
 				'options' => array(
@@ -124,6 +138,7 @@ return array(
             'Application\Controller\Index' => 'Application\Controller\IndexController',
 			'Application\Controller\Shopper' => 'Application\Controller\ShopperController',
 			'Application\Controller\Trans' => 'Application\Controller\TransController',
+			'Application\Controller\Source' => 'Application\Controller\SourceController',
 			'Application\Controller\Ajax' => 'Application\Controller\AjaxController'
         ),
     ),

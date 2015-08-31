@@ -1,0 +1,22 @@
+<?php echo $this->render('application/source/bits/menu.phtml'); ?>
+
+<table class="table table-bordered">
+	<tr>
+		<th>ID</th>
+		<th>Название</th>
+		<th>Тип</th>
+	</tr>
+	<?php foreach ($this->sources as $source) : ?>
+	<tr>
+		<td><?php echo $source->id; ?>
+			<a href="<?php echo $this->url('source', array('action'=>'delete', 'id'=>$source->id)) ?>">
+				<span class=" text-right glyphicon glyphicon-trash" aria-hidden="true"></span>
+			</a>
+		</td>
+		<td>
+			<a href="<?php echo $this->url('source', array('action'=>'edit', 'id'=>$source->id)) ?>"><?php echo $source->name; ?></a></br>
+		</td>
+		<td><?php echo $source->type; ?></td>
+	</tr>
+	<?php endforeach; ?>
+</table>

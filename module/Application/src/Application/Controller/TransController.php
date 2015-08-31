@@ -2,9 +2,7 @@
 namespace Application\Controller;
 
 use Application\Entity\Transaction;
-use Application\Form\ProductForm;
 use Application\Form\TransactionForm;
-use Application\Service\Cart\ProductCart;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 

@@ -1,0 +1,16 @@
+<?php
+$title = 'Добавить источник';
+$this->headTitle($title);
+?>
+<h1 class="lg-"><?php echo $this->escapeHtml($title); ?></h1>
+
+<?php
+$form->setAttribute('action', $this->url('source', array('action' => 'add')));
+$form->prepare();
+
+echo $this->form()->openTag($form);
+echo $this->formHidden($form->get('id'));
+echo $this->customRow($form->get('name'));
+echo $this->customRow($form->get('type'));
+echo $this->formSubmit($form->get('submit'));
+echo $this->form()->closeTag();
