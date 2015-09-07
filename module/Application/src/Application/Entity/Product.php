@@ -244,7 +244,7 @@ class Product implements  InputFilterAwareInterface {
 					array(
 						'name'    => 'Date',
 						'options' => array(
-							'format' => 'Y-m-d H:i:s'
+							'format' => 'Y-m-d H:i'
 						),
 					),
 				),
@@ -257,14 +257,14 @@ class Product implements  InputFilterAwareInterface {
 				'filters'  => array(
 					array('name' => 'DateTimeSelect'),
 				),
-//				'validators' => array(
-//					array(
-//						'name'    => 'Date',
-//						'options' => array(
-//							'format' => 'Y-m-d H:i:s'
-//						),
-//					),
-//				),
+				'validators' => array(
+					array(
+						'name'    => 'Date',
+						'options' => array(
+							'format' => 'Y-m-d H:i'
+						),
+					),
+				),
 			));
 
 			$inputFilter->add(array(
@@ -277,7 +277,7 @@ class Product implements  InputFilterAwareInterface {
 					array(
 						'name'    => 'Date',
 						'options' => array(
-							'format' => 'Y-m-d H:i:s'
+							'format' => 'Y-m-d H:i'
 						),
 					),
 				),

@@ -20,7 +20,7 @@ class CustomFormGroup extends  FormLabel
 	public function openTag($attributesOrElement = null)
 	{
 		if (null === $attributesOrElement) {
-			return '<div class="form-group">';
+			return '<div class="row"><div class="form-group col-lg-12">';
 		}
 
 		if (is_array($attributesOrElement)) {
@@ -66,6 +66,6 @@ class CustomFormGroup extends  FormLabel
 	 */
 	public function closeTag()
 	{
-		return '</div>';
+		return '</div></div>';
 	}
 }

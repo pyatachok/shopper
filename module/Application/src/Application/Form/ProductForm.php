@@ -78,24 +78,24 @@ class ProductForm extends Form implements EntityManagerAwareInterface
 				'min' => '2010-01-01 00:00:00',
 				'max' => '2030-01-01 00:00:00',
 				'step'=> 'any',
-				'class' => 'form-control',
-//				'value' => new \DateTime('now'),
+				'class' => 'form-control datetimepicker',
+				'value' => new \DateTime('now'),
 			),
 			'options' => array(
 				'label' => 'Start Date',
-				'format' => 'Y-m-d H:i:s'
+				'format' => 'Y-m-d H:i'
 			),
 		));
 
 		$this->add(array(
 			'name' => 'finish',
-			'type' => 'DateTimeSelect',
+			'type' => 'DateTime',
 			'attributes' => array(
 				'min' => '2010-01-01 00:00:00',
 				'max' => '2030-01-01 00:00:00',
 				'step'=> 'any',
-				'class' => 'form-control',
-				'value' => new \DateTime('tomorrow'),
+				'class' => 'form-control datetimepicker',
+				'value' => new \DateTime('now'),
 			),
 			'options' => array(
 				'label' => 'Finish Date',
@@ -103,19 +103,37 @@ class ProductForm extends Form implements EntityManagerAwareInterface
 			),
 		));
 
+
+
+//		$this->add(array(
+//			'name' => 'finish',
+//			'type' => 'DateTime',
+//			'attributes' => array(
+//				'min' => '2010-01-01 00:00:00',
+//				'max' => '2030-01-01 00:00:00',
+//				'step'=> 'any',
+//				'class' => 'form-control datetimepicker',
+//				'value' => new \DateTime('tomorrow'),
+//			),
+//			'options' => array(
+//				'label' => 'Finish Date',
+//				'format' => 'Y-m-d H:i'
+//			),
+//		));
+
 		$this->add(array(
 			'name' => 'purchase_date',
-			'type' => 'DateTimeSelect',
+			'type' => 'DateTime',
 			'attributes' => array(
-				'min' => '2010-01-01 00:00:00',
-				'max' => '2030-01-01 00:00:00',
+				'min' => '2010-01-01 00:00',
+				'max' => '2030-01-01 00:00',
 				'step'=> 'any',
-				'class' => 'form-control',
+				'class' => 'form-control datetimepicker',
 				'value' => new \DateTime('now'),
 			),
 			'options' => array(
 				'label' => 'Purchase Date',
-				'format' => 'Y-m-d H:i:s'
+				'format' => 'Y-m-d H:i'
 			),
 		));
 

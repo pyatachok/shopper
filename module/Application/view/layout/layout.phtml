@@ -15,6 +15,7 @@
                         ->prependStylesheet($this->basePath('css/style.css'))
                         ->prependStylesheet($this->basePath('css/bootstrap-theme.min.css'))
                         ->prependStylesheet($this->basePath('css/bootstrap.min.css'))
+						->appendStylesheet($this->basePath('css/bootstrap-datetimepicker.css'))
 //						->appendStylesheet($this->basePath('js/jquery-ui-1.11.4.custom/jquery-ui.css'))
 //						->appendStylesheet($this->basePath('js/jquery-ui-1.11.4.custom/jquery-ui.theme.css'))
 //						->appendStylesheet($this->basePath('js/jquery-ui-1.11.4.custom/jquery-ui.structure.css'))
@@ -27,6 +28,9 @@
             ->prependFile($this->basePath('js/respond.min.js'), 'text/javascript', array('conditional' => 'lt IE 9',))
             ->prependFile($this->basePath('js/html5shiv.min.js'),   'text/javascript', array('conditional' => 'lt IE 9',))
 			->appendFile($this->basePath('js/bootstrap-3-typeahead/bootstrap3-typeahead.js'))
+			->appendFile($this->basePath('js/moment.js'))
+			->appendFile($this->basePath('js/bootstrap-datepicker.js'))
+			->appendFile($this->basePath('js/bootstrap-datetimepicker.js'))
 //				->appendFile($this->basePath('js/jquery-ui-1.11.4.custom/jquery-ui.js'))
 			->appendFile($this->basePath('js/custom/script.js'))
         ; ?>
@@ -47,7 +51,6 @@
 
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
-                        <li class="<?php echo $this->url() == $this->url('home') ? 'active' : '' ?>"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home') ?></a></li>
 						<li class="<?php echo $this->url() == $this->url('shopper') ? 'active' : '' ?>"><a href="<?php echo $this->url('shopper') ?>"><?php echo $this->translate('Покупки') ?></a></li>
 						<li class="<?php echo $this->url() == $this->url('trans') ? 'active' : '' ?>"><a href="<?php echo $this->url('trans') ?>"><?php echo $this->translate('Транзакции') ?></a></li>
 						<li class="<?php echo $this->url() == $this->url('source') ? 'active' : '' ?>"><a href="<?php echo $this->url('source') ?>"><?php echo $this->translate('Источники') ?></a></li>

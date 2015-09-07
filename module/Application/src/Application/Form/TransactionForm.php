@@ -37,17 +37,20 @@ class TransactionForm extends Form implements EntityManagerAwareInterface
 		$this->add(array(
 			'name' => 'date',
 			'type' => 'DateTime',
+			'options' => array(
+				'label' => 'Date',
+				'format' => 'Y-m-d H:i',
+				'pattern' => 'Y-m-d H:i'
+
+			),
 			'attributes' => array(
 				'min' => '2010-01-01 00:00:00',
 				'max' => '2030-01-01 00:00:00',
 				'step'=> 'any',
-				'class' => 'form-control',
+				'class' => 'form-control datetimepicker',
 				'value' => new \DateTime('now'),
 			),
-			'options' => array(
-				'label' => 'Date',
-				'format' => 'Y-m-d H:i:s'
-			),
+
 		));
 
 		$this->add(array(

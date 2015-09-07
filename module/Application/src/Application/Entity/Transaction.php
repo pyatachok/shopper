@@ -119,7 +119,7 @@ class Transaction implements  InputFilterAwareInterface {
 					array(
 						'name'    => 'Date',
 						'options' => array(
-							'format' => 'Y-m-d H:i:s'
+							'format' => 'Y-m-d H:i'
 						),
 					),
 				),
